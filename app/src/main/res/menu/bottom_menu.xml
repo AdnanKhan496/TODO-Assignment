@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/tasksFragment"
+        android:icon="@drawable/icon_home"
+        android:enabled="true"
+        android:title="@string/home"
+        app:showAsAction="always"
+        android:orderInCategory="1"/>
+
+    <item
+        android:id="@+id/allTasksFragment"
+        android:icon="@drawable/icon_list"
+        android:title="@string/all_list"
+        android:enabled="true"
+        app:showAsAction="always"
+        android:orderInCategory="2"/>
+
+
+
+</menu>
