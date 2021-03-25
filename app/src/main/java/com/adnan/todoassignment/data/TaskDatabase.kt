@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Provider
 
-@Database(entities = [Task::class], version = 1,exportSchema = false)
+@Database(entities = [Task::class, SubTask::class], version = 1,exportSchema = false)
 abstract class TaskDatabase : RoomDatabase() {
 
     abstract fun taskDao(): TaskDao
@@ -24,14 +24,14 @@ abstract class TaskDatabase : RoomDatabase() {
 
             val dao = database.get().taskDao()
 
-            applicationScope.launch {
-                dao.insert(Task("Potatoes", "50"))
-                dao.insert(Task("Tomatoes", "100"))
-                dao.insert(Task("Fish","500", important = true))
-                dao.insert(Task("Dishes","300", completed = true))
-                dao.insert(Task("Drinks","150"))
-                dao.insert(Task("Glasses","450", completed = true))
-            }
+            /*applicationScope.launch {
+                dao.insert(Task("1", "50"))
+                dao.insert(Task("2", "100"))
+                dao.insert(Task("3","500", important = true))
+                dao.insert(Task("4","300", completed = true))
+                dao.insert(Task("5","150"))
+                dao.insert(Task("6","450", completed = true))
+            }*/
         }
     }
 }

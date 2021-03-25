@@ -3,10 +3,7 @@ package com.adnan.todoassignment.ui.tasks
 import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.adnan.todoassignment.data.PreferencesManager
-import com.adnan.todoassignment.data.SortOrder
-import com.adnan.todoassignment.data.Task
-import com.adnan.todoassignment.data.TaskDao
+import com.adnan.todoassignment.data.*
 import com.adnan.todoassignment.ui.ADD_TASK_RESULT_OK
 import com.adnan.todoassignment.ui.EDIT_TASK_RESULT_OK
 import kotlinx.coroutines.channels.Channel
@@ -26,7 +23,11 @@ class TasksViewModel @ViewModelInject constructor(
     val preferencesFlow = preferencesManager.preferencesFlow
 
     private val tasksEventChannel = Channel<TasksEvent>()
+    private val subTasksEventChannel = Channel<SubTasksEvent>()
     val tasksEvent = tasksEventChannel.receiveAsFlow()
+    val subTasksEvent = subTasksEventChannel.receiveAsFlow()
+
+
 
     private val tasksFlow = combine(
         searchQuery.asFlow(),
@@ -37,7 +38,27 @@ class TasksViewModel @ViewModelInject constructor(
         taskDao.getTasks(query, filterPreferences.sortOrder, filterPreferences.hideCompleted)
     }
 
+    private val subTasksFlow = combine(
+        searchQuery.asFlow(),
+        preferencesFlow
+    ) { query, filterPreferences ->
+        Pair(query, filterPreferences)
+    }.flatMapLatest { (query, filterPreferences) ->
+        taskDao.getSubTasks(categoryId = "3","3", filterPreferences.sortOrder, filterPreferences.hideCompleted)
+    }
+
+    //var subTask = taskDao.getSubTasks(5, true).asLiveData()
+
+
+    /*init {
+        val tasks = tasksFlow.asLiveData()
+        val subTasks = subTasksFlow.asLiveData()
+
+
+    }*/
+
     val tasks = tasksFlow.asLiveData()
+    val subTasks = subTasksFlow.asLiveData()
 
     fun onSortOrderSelected(sortOrder: SortOrder) = viewModelScope.launch {
         preferencesManager.updateSortOrder(sortOrder)
@@ -55,6 +76,8 @@ class TasksViewModel @ViewModelInject constructor(
         taskDao.update(task.copy(completed = isChecked))
     }
 
+
+
     fun onTaskSwiped(task: Task) = viewModelScope.launch {
         taskDao.delete(task)
         tasksEventChannel.send(TasksEvent.ShowUndoDeleteTaskMessage(task))
@@ -64,8 +87,17 @@ class TasksViewModel @ViewModelInject constructor(
         taskDao.insert(task)
     }
 
+    fun onUndoDeleteClickSubTask(subTask: SubTask) = viewModelScope.launch {
+        taskDao.insertSubTask(subTask)
+    }
+
     fun onAddNewTaskClick() = viewModelScope.launch {
         tasksEventChannel.send(TasksEvent.NavigateToAddTaskScreen)
+    }
+
+    //st
+    fun onAddNewSubTaskClick() = viewModelScope.launch {
+        subTasksEventChannel.send(SubTasksEvent.NavigateToAddTaskScreenST)
     }
 
     fun onAddEditResult(result: Int) {
@@ -89,5 +121,13 @@ class TasksViewModel @ViewModelInject constructor(
         data class ShowUndoDeleteTaskMessage(val task: Task) : TasksEvent()
         data class ShowTaskSavedConfirmationMessage(val msg: String) : TasksEvent()
         object NavigateToDeleteAllCompletedScreen : TasksEvent()
+    }
+
+    sealed class SubTasksEvent {
+        object NavigateToAddTaskScreenST : SubTasksEvent()
+        data class NavigateToEditTaskScreenST(val subTask: SubTask) : SubTasksEvent()
+        data class ShowUndoDeleteTaskMessageST(val subTask: SubTask) : SubTasksEvent()
+        data class ShowTaskSavedConfirmationMessageST(val msg: String) : SubTasksEvent()
+        object NavigateToDeleteAllCompletedScreenST : SubTasksEvent()
     }
 }

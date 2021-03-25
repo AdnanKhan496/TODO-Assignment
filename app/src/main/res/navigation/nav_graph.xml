@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_tasksFragment_to_addEditTaskFragment"
             app:destination="@id/addEditTaskFragment" />
+        <action
+            android:id="@+id/action_tasksFragment_to_addEditSubTaskFragment"
+            app:destination="@id/addEditSubTaskFragment" />
     </fragment>
     <fragment
         android:id="@+id/addEditTaskFragment"
@@ -40,4 +43,8 @@
         android:name="com.adnan.todoassignment.ui.alltaskslist.AllTasksFragment"
         android:label="All List"
         tools:layout="@layout/fragment_all_tasks_list" />
+    <fragment
+        android:id="@+id/addEditSubTaskFragment"
+        android:name="com.adnan.todoassignment.ui.addeditsubtask.AddEditSubTaskFragment"
+        android:label="AddEditSubTaskFragment" />
 </navigation>

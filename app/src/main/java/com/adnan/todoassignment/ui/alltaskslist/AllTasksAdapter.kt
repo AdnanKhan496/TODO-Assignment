@@ -55,7 +55,7 @@ class AllTasksAdapter() :
                 checkBoxCompleted.visibility = View.INVISIBLE
                 llSide.backgroundTintList = ContextCompat.getColorStateList(llSide.context, R.color.black)
                 textViewName.text = task.name
-                textViewPrice.text = "RS/- "+ task.price
+                textViewPrice.visibility =View.GONE
                 textViewName.paint.isStrikeThruText = task.completed
                 textViewPrice.paint.isStrikeThruText = task.completed
                 labelPriority.isVisible = task.important

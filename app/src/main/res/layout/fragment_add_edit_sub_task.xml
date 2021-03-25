@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.addedittask.AddEditTaskFragment">
+    tools:context=".ui.addeditsubtask.AddEditSubTaskFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="16dp"
-            android:text="List Name"
+            android:text="Sub Task Item Name"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:textSize="18sp" />
@@ -28,7 +28,7 @@
             android:minHeight="45dp"
             android:layout_marginTop="2dp"
             android:background="@drawable/rounded_border"
-            android:hint="Your List Name"
+            android:hint="Your Item Name"
             android:maxLines="4"
             android:paddingStart="16dp"
             android:paddingEnd="8dp"
@@ -39,11 +39,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:layout_marginTop="16dp"
-            android:text="Grocery Item Price"
+            android:text="Sub Task Item Price"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:textSize="18sp"
-            android:visibility="gone"/>
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/edit_text_task_price"
@@ -57,16 +56,14 @@
             android:paddingStart="16dp"
             android:paddingEnd="8dp"
             android:singleLine="true"
-            android:textSize="14sp"
-            android:visibility="gone"/>
+            android:textSize="14sp" />
 
         <CheckBox
-            android:visibility="gone"
             android:layout_marginTop="10dp"
             android:id="@+id/check_box_important"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Is it an list important?" />
+            android:text="Is it an important item?" />
 
         <TextView
             android:layout_gravity="center"

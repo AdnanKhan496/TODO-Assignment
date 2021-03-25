@@ -43,10 +43,7 @@ class AddEditTaskViewModel @ViewModelInject constructor(
 
     fun onSaveClick() {
         if (taskName.isBlank()) {
-            showInvalidInputMessage("Item Name cannot be empty")
-            return
-        } else if( taskPrice.isBlank()){
-            showInvalidInputMessage("Item Price cannot be empty")
+            showInvalidInputMessage("List Name cannot be empty")
             return
         }
 
